@@ -6,22 +6,26 @@ import User from '@/models/User';
 
 export async function GET() {
   try {
+    // Get the authenticated session
     const session = await getServerSession(authOptions);
-    
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+    // If no active session, return 401 Unauthorized
+    if (!session?.user?.email) {
+      return NextResponse.json({ success: false, error: 'Unauthorized access' }, { status: 401 });
     }
-    
-    // Connect to database
+
+    // Ensure DB connection
     await connectDB();
-    
-    // Get user from database - find by email since we're using GitHub OAuth
+
+    // Search user by email from session
     const user = await User.findOne({ email: session.user.email }).select('-password');
-    
+
+    // If user not found in DB
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ success: false, error: 'User not found' }, { status: 404 });
     }
-    
+
+    // Return user profile (excluding sensitive data)
     return NextResponse.json({
       success: true,
       user: {
@@ -34,10 +38,10 @@ export async function GET() {
         role: user.role,
         createdAt: user.createdAt
       }
-    });
-    
+    }, { status: 200 });
+
   } catch (error) {
-    console.error('Error fetching profile:', error);
-    return NextResponse.json({ error: 'Failed to fetch profile: ' + error.message }, { status: 500 });
+    console.error('GET /api/profile error:', error);
+    return NextResponse.json({ success: false, error: 'Server error: ' + error.message }, { status: 500 });
   }
-} 
+}
