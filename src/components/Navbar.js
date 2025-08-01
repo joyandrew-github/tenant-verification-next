@@ -20,8 +20,17 @@ export default function Navbar() {
   return (
     <nav className="bg-gradient-to-r from-slate-800/80 to-slate-900/80 backdrop-blur-sm border-b border-slate-700/50 shadow-xl py-4 relative z-20">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-cyan-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-300">
-          Tenant Verification
+        <Link href="/" className="flex items-center gap-3 hover:scale-[1.02] transition-all duration-300">
+          <Image
+            src="/tenant-verification-service-250x250.webp"
+            alt="Tenant Verification Logo"
+            width={40}
+            height={40}
+            className="rounded-full shadow-lg"
+          />
+          <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-cyan-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-300">
+            Tenant Verification
+          </span>
         </Link>
         
         <div className="flex items-center gap-4">
