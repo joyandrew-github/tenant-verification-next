@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, use, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 
 export default function ApplicationDetail({ params }) {
-  const { id } = use(params);
+  const { id } = params;
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
   const [application, setApplication] = useState(null);
@@ -45,7 +45,7 @@ export default function ApplicationDetail({ params }) {
     }
   }, [sessionStatus, session, router, fetchApplicationDetail]);
   
-  const handleStatusChange = async (newStatus, rejectionReason = '') => {
+  const handleStatusChange = useCallback(async (newStatus, rejectionReason = '') => {
     try {
       const response = await fetch(`/api/admin/applications/${id}`, {
         method: 'PATCH',
@@ -65,7 +65,7 @@ export default function ApplicationDetail({ params }) {
       console.error('Error updating application status:', error);
       alert('Failed to update status. Please try again.');
     }
-  };
+  }, [id]);
   
   const handleReject = () => {
     const reason = prompt('Please provide a reason for rejection:');

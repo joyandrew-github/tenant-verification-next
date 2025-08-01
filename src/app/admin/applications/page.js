@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
@@ -27,9 +27,9 @@ export default function AdminApplications() {
       
       fetchApplications();
     }
-  }, [sessionStatus, session, router]);
+  }, [sessionStatus, session, router, fetchApplications]);
   
-  const fetchApplications = async () => {
+  const fetchApplications = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/applications');
       
@@ -44,9 +44,9 @@ export default function AdminApplications() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
   
-  const handleStatusChange = async (applicationId, newStatus, rejectionReason = '') => {
+  const handleStatusChange = useCallback(async (applicationId, newStatus, rejectionReason = '') => {
     try {
       const response = await fetch(`/api/admin/applications/${applicationId}`, {
         method: 'PATCH',
@@ -72,14 +72,14 @@ export default function AdminApplications() {
       console.error('Error updating application status:', error);
       alert('Failed to update status. Please try again.');
     }
-  };
+  }, []);
   
-  const handleReject = (applicationId) => {
+  const handleReject = useCallback((applicationId) => {
     const reason = prompt('Please provide a reason for rejection:');
     if (reason !== null) {
       handleStatusChange(applicationId, 'rejected', reason);
     }
-  };
+  }, [handleStatusChange]);
   
   const filteredApplications = applications
     .filter(app => {
