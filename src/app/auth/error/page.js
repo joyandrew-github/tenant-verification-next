@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import { Suspense } from 'react';
 
-export default function AuthError() {
+function AuthErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
 
@@ -57,5 +58,25 @@ export default function AuthError() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function AuthError() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center p-6">
+          <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md text-center">
+            <h1 className="text-2xl font-bold mb-6 text-red-600">Authentication Error</h1>
+            <div className="bg-red-50 text-red-500 p-4 rounded-md mb-6">
+              Loading...
+            </div>
+          </div>
+        </main>
+      </div>
+    }>
+      <AuthErrorContent />
+    </Suspense>
   );
 }

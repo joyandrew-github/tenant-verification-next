@@ -6,6 +6,8 @@ import TenantVerification from '@/models/TenantVerification';
 import connectDB from '@/lib/mongodb';
 import cloudinary from '@/lib/cloudinary';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions);

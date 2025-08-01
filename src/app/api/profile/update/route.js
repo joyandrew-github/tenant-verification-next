@@ -5,6 +5,8 @@ import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
 import cloudinary from '@/lib/cloudinary';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);

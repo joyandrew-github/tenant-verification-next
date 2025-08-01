@@ -26,7 +26,7 @@ export default function ApplicationDetail({ params }) {
       
       fetchApplicationDetail();
     }
-  }, [sessionStatus, session, router, id]);
+  }, [sessionStatus, session, router, id, fetchApplicationDetail]);
   
   const fetchApplicationDetail = async () => {
     try {
@@ -92,7 +92,7 @@ export default function ApplicationDetail({ params }) {
         <main className="flex-grow p-6 relative z-10">
           <div className="max-w-3xl mx-auto bg-gradient-to-br from-slate-800/60 to-slate-700/40 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-slate-600/30 text-center">
             <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">Application Not Found</h1>
-            <p className="text-gray-300 mb-6">The application you're looking for doesn't exist or has been removed.</p>
+            <p className="text-gray-300 mb-6">The application you&apos;re looking for doesn&apos;t exist or has been removed.</p>
             <button
               onClick={() => router.push('/admin/applications')}
               className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-2 px-4 rounded-lg hover:from-cyan-700 hover:to-blue-700 transition-all duration-300"

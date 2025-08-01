@@ -21,7 +21,7 @@ export default function ApplicationStatus() {
     if (sessionStatus === 'authenticated' && session?.user?.id) {
       fetchApplicationStatus();
     }
-  }, [sessionStatus, session, router]);
+  }, [sessionStatus, session, router, fetchApplicationStatus]);
 
   const fetchApplicationStatus = async () => {
     try {
@@ -108,7 +108,7 @@ export default function ApplicationStatus() {
                   </svg>
                 </div>
                 <h2 className="text-xl font-semibold text-white mb-4">No Application Found</h2>
-                <p className="text-gray-300 mb-8">You haven't submitted a tenant verification application yet.</p>
+                <p className="text-gray-300 mb-8">You haven&apos;t submitted a tenant verification application yet.</p>
                 <div className="space-y-4">
                   <button
                     onClick={() => router.push('/dashboard/apply')}

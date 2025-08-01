@@ -29,7 +29,7 @@ export default function Dashboard() {
       fetchAdminStats();
     }
     fetchUserActivity();
-  }, [session]);
+  }, [session, fetchUserActivity]);
 
   const fetchAdminStats = async () => {
     try {

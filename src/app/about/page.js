@@ -20,7 +20,7 @@ export default function About() {
               About Our Platform
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Discover how we're revolutionizing tenant verification with cutting-edge technology and unwavering security.
+              Discover how we&apos;re revolutionizing tenant verification with cutting-edge technology and unwavering security.
             </p>
           </div>
           
@@ -33,7 +33,7 @@ export default function About() {
               </div>
               <h2 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Our Mission</h2>
               <p className="text-gray-300 leading-relaxed">
-                At Tenant Verification Platform, we're committed to streamlining the tenant verification process 
+                At Tenant Verification Platform, we&apos;re committed to streamlining the tenant verification process 
                 for landlords, property managers, and tenants alike. Our secure platform provides a reliable way 
                 to verify tenant information, ensuring peace of mind for all parties involved.
               </p>
