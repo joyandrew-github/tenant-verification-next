@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
@@ -12,18 +12,7 @@ export default function ApplicationStatus() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (sessionStatus === 'unauthenticated') {
-      router.push('/auth/signin');
-      return;
-    }
-
-    if (sessionStatus === 'authenticated' && session?.user?.id) {
-      fetchApplicationStatus();
-    }
-  }, [sessionStatus, session, router, fetchApplicationStatus]);
-
-  const fetchApplicationStatus = async () => {
+  const fetchApplicationStatus = useCallback(async () => {
     try {
       setError(null);
       console.log('Session user:', session.user);
@@ -49,7 +38,18 @@ export default function ApplicationStatus() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.user?.id]);
+
+  useEffect(() => {
+    if (sessionStatus === 'unauthenticated') {
+      router.push('/auth/signin');
+      return;
+    }
+
+    if (sessionStatus === 'authenticated' && session?.user?.id) {
+      fetchApplicationStatus();
+    }
+  }, [sessionStatus, session, router, fetchApplicationStatus]);
 
   if (sessionStatus === 'loading' || loading) {
     return (

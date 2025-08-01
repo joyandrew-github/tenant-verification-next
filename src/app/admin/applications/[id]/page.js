@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
@@ -11,6 +11,23 @@ export default function ApplicationDetail({ params }) {
   const router = useRouter();
   const [application, setApplication] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  const fetchApplicationDetail = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/admin/applications/${id}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch application details');
+      }
+      
+      const data = await response.json();
+      setApplication(data.application);
+    } catch (error) {
+      console.error('Error fetching application details:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
   
   useEffect(() => {
     if (sessionStatus === 'unauthenticated') {
@@ -26,24 +43,7 @@ export default function ApplicationDetail({ params }) {
       
       fetchApplicationDetail();
     }
-  }, [sessionStatus, session, router, id, fetchApplicationDetail]);
-  
-  const fetchApplicationDetail = async () => {
-    try {
-      const response = await fetch(`/api/admin/applications/${id}`);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch application details');
-      }
-      
-      const data = await response.json();
-      setApplication(data.application);
-    } catch (error) {
-      console.error('Error fetching application details:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [sessionStatus, session, router, fetchApplicationDetail]);
   
   const handleStatusChange = async (newStatus, rejectionReason = '') => {
     try {

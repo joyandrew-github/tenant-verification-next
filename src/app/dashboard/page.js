@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 
@@ -24,14 +24,7 @@ export default function Dashboard() {
     }
   }, [status, router]);
 
-  useEffect(() => {
-    if (session?.user?.role === 'admin') {
-      fetchAdminStats();
-    }
-    fetchUserActivity();
-  }, [session, fetchUserActivity]);
-
-  const fetchAdminStats = async () => {
+  const fetchAdminStats = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/stats');
       if (response.ok) {
@@ -41,9 +34,9 @@ export default function Dashboard() {
     } catch (error) {
       console.error('Error fetching admin stats:', error);
     }
-  };
+  }, []);
 
-  const fetchUserActivity = async () => {
+  const fetchUserActivity = useCallback(async () => {
     try {
       const response = await fetch(`/api/tenant-verification?userId=${session?.user?.id}`);
       if (response.ok) {
@@ -63,7 +56,14 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.user?.id]);
+
+  useEffect(() => {
+    if (session?.user?.role === 'admin') {
+      fetchAdminStats();
+    }
+    fetchUserActivity();
+  }, [session, fetchAdminStats, fetchUserActivity]);
 
   if (status === 'loading') {
     return (
