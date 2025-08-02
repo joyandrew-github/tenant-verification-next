@@ -21,13 +21,11 @@ export default function Navbar() {
     <nav className="bg-gradient-to-r from-slate-800/80 to-slate-900/80 backdrop-blur-sm border-b border-slate-700/50 shadow-xl py-4 relative z-20">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3 hover:scale-[1.02] transition-all duration-300">
-          <Image
-            src="/tenant-verification-service-250x250.webp"
-            alt="Tenant Verification Logo"
-            width={40}
-            height={40}
-            className="rounded-full shadow-lg"
-          />
+          <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 5.5V7C15 8.65 13.65 10 12 10S9 8.65 9 7V5.5L3 7V9C3 10.65 4.35 12 6 12H8V20C8 21.1 8.9 22 10 22H14C15.1 22 16 21.1 16 20V12H18C19.65 12 21 10.65 21 9ZM19 15L17.5 16.5L19 18L22 15L19 12L17.5 13.5L19 15Z"/>
+            </svg>
+          </div>
           <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent hover:from-cyan-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-300">
             Tenant Verification
           </span>

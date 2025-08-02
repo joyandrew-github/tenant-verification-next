@@ -4,9 +4,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
+import { use } from 'react';
 
 export default function ApplicationDetail({ params }) {
-  const { id } = params;
+  const { id } = use(params);
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
   const [application, setApplication] = useState(null);

@@ -13,22 +13,6 @@ export default function AdminApplications() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   
-  useEffect(() => {
-    if (sessionStatus === 'unauthenticated') {
-      router.push('/auth/signin');
-      return;
-    }
-    
-    if (sessionStatus === 'authenticated') {
-      if (session.user.role !== 'admin') {
-        router.push('/dashboard');
-        return;
-      }
-      
-      fetchApplications();
-    }
-  }, [sessionStatus, session, router, fetchApplications]);
-  
   const fetchApplications = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/applications');
@@ -45,6 +29,22 @@ export default function AdminApplications() {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (sessionStatus === 'unauthenticated') {
+      router.push('/auth/signin');
+      return;
+    }
+    
+    if (sessionStatus === 'authenticated') {
+      if (session.user.role !== 'admin') {
+        router.push('/dashboard');
+        return;
+      }
+      
+      fetchApplications();
+    }
+  }, [sessionStatus, session, router, fetchApplications]);
   
   const handleStatusChange = useCallback(async (applicationId, newStatus, rejectionReason = '') => {
     try {

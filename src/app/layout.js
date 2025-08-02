@@ -1,14 +1,13 @@
-import { Inter } from "next/font/google";
-import { Roboto_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 
-const geistSans = Inter({
+const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Roboto_Mono({
+const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -19,20 +18,16 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: "/tenant-verification-service-250x250.webp",
+        url: "/image.png",
         sizes: "32x32",
-        type: "image/webp",
+        type: "image/png",
       },
-      {
-        url: "/favicon.ico",
-        sizes: "16x16",
-        type: "image/x-icon",
-      },
+    
     ],
     apple: {
-      url: "/tenant-verification-service-250x250.webp",
+      url: "/image.png",
       sizes: "180x180",
-      type: "image/webp",
+      type: "image/png",
     },
   },
 };
@@ -41,18 +36,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link
-          rel="icon"
-          href="/tenant-verification-service-250x250.webp"
-          type="image/webp"
-        />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          href="/tenant-verification-service-250x250.webp"
-        />
+      
+        <link rel="apple-touch-icon" href="/image.png" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
